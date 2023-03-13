@@ -108,4 +108,27 @@ frappe:
     # command: sleep infinity
 ```
 
+### For GreenMail  (IMAP and SMTP embedded server)
+Setup Frappe Email Domain
+https://0.0.0.0:8000/app/email-domain/example.com
 
+IMAP
+Server : greenmail 
+port : 3143
+use IMAP : yes
+
+SMTP
+Server : greenmail 
+port : 3025
+
+In Green mail : Create user
+http://0.0.0.0:6081/#post-/api/user
+
+Setup Frappe Account the password you just set in GreenMail
+https://0.0.0.0:8000/app/email-account/view/list
+
+### For Roudcube (to check email)
+
+with the email account you've created in Greenmail
+
+http://0.0.0.0:6082
