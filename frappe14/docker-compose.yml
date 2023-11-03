@@ -37,7 +37,7 @@ services:
     networks:
       - frappe-network
     ports:
-      - "33066:3306"
+      - "33067:3306"
 
   # Enable PostgreSQL only if you use it, see development/README.md for more information.
   # postgresql:
@@ -72,15 +72,15 @@ services:
   frappe:
     build: .
     command: bash -c "cd frappe-bench;bench start"
-    # command: sleep infinity
+#    command: sleep infinity
     user: frappe:frappe
     environment:
       SSH_AUTH_SOCK: $SSH_AUTH_SOCK
     volumes:
       - ../../frappe_docker_14:/workspace
-      - /home/${USER}/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
-      - /home/${USER}/.bash_history:/home/frappe/.bash_history
-      - /home/${USER}/.gitconfig:/home/frappe/.gitconfig
+      - /home/noe/.ssh/known_hosts:/home/frappe/.ssh/known_hosts
+      - /home/noe/.bash_history:/home/frappe/.bash_history
+      - /home/noe/.gitconfig:/home/frappe/.gitconfig
       - .bash_aliases:/home/frappe/.bash_aliases
       - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
     working_dir: /workspace/development/
@@ -104,21 +104,21 @@ services:
   greenmail:
     image: greenmail/standalone
     ports:
-      - "6081:8080"
+      - "6082:8080"
     networks:
       - frappe-network
 
-  roudcube:
-    image: roundcube/roundcubemail
-    environment:
-      ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
-      ROUNDCUBEMAIL_DEFAULT_PORT: 3143
-      ROUNDCUBEMAIL_SMTP_SERVER: greenmail
-      ROUNDCUBEMAIL_SMTP_PORT: 3025
-    ports:
-      - "6082:80"
-    networks:
-      - frappe-network
+#  roudcube:
+#    image: roundcube/roundcubemail
+#    environment:
+#      ROUNDCUBEMAIL_DEFAULT_HOST: greenmail
+#      ROUNDCUBEMAIL_DEFAULT_PORT: 3143
+#      ROUNDCUBEMAIL_SMTP_SERVER: greenmail
+#      ROUNDCUBEMAIL_SMTP_PORT: 3025
+#    ports:
+#      - "6082:80"
+#    networks:
+#      - frappe-network
 
   # adminer:
   # image: adminer
@@ -129,14 +129,14 @@ services:
   # networks:
   # - frappe-network
 
-#  phpmyadmin:
-#    image: phpmyadmin/phpmyadmin
-#    container_name: frappe_phpmyadmin
-#    environment:
-#      PMA_HOST: mariadb
-#    depends_on:
-#      - mariadb
-#    ports:
-#      - "8080:80"
-#    networks:
-#      - frappe-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: frappe_phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+    depends_on:
+      - mariadb
+    ports:
+      - "8081:80"
+    networks:
+      - frappe-network

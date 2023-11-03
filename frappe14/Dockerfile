@@ -83,11 +83,11 @@ RUN if [ "$(uname -m)" = "aarch64" ]; then export ARCH=arm64; fi \
     && dpkg -i $downloaded_file \
     && rm $downloaded_file
 
-# Create new user with home directory, improve docker compatibility with UID/GID 1000,
+# Create new user with home directory, improve docker compatibility with UID/GID 1003 = noe,
 # add user to sudo group, allow passwordless sudo, switch to that user
 # and change directory to user home directory
-RUN groupadd -g 1000 frappe \
-    && useradd --no-log-init -r -m -u 1000 -g 1000 -G sudo frappe \
+RUN groupadd -g 1003 frappe \
+    && useradd --no-log-init -r -m -u 1003 -g 1003 -G sudo frappe \
     && echo "frappe ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 USER frappe
@@ -119,7 +119,7 @@ RUN git clone ${GIT_REPO} --depth 1 -b ${GIT_BRANCH} .bench \
 
 # Install Node via nvm
 ENV NODE_VERSION_14=14.19.3
-ENV NODE_VERSION=16.18.0
+ENV NODE_VERSION=18.18.0
 ENV NVM_DIR /home/frappe/.nvm
 ENV PATH ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}
 

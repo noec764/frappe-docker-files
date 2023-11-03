@@ -60,7 +60,7 @@ Then follow the step given by official documentation
 
 Enter into bash of the container
 ```sh
-docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappedev_frappe_1 bash
+docker exec -e "TERM=xterm-256color" -w /workspace/development -it frappe14-frappe-1 bash
 ```
 
 inside container bash
@@ -74,7 +74,9 @@ bench set-config -g redis_cache redis://redis-cache:6379
 bench set-config -g redis_queue redis://redis-queue:6379
 bench set-config -g redis_socketio redis://redis-socketio:6379
 
+
 bench new-site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] --mariadb-root-password 123 --admin-password admin --no-mariadb-socket --db-name [dbname]
+bench --site library.test add-to-hosts
 
 bench get-app --branch develop erpnext https://github.com/frappe/erpnext.git
 bench --site [url without https:// probably local site name erpnext.local manage into /etc/hosts for local dev env] install-app erpnext
